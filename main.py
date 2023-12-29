@@ -40,60 +40,12 @@ if isTrue:
     print("YES")
 else:
     print("NO")
-# if p[0] == 'VE':
-#     if p[1] == 'CO':
-#         complete_extensions = graph.find_all_complete_extensions()
-#         given_arguments = tuple(parsed_args.ARGUMENTS)
-#         if given_arguments in complete_extensions:
-#             print("YES") 
-#         else:
-#             print("NO")
-#     elif p[1] == 'ST':
-#         stable_extensions = graph.find_all_stable_extensions()
-#         given_arguments = tuple(parsed_args.ARGUMENTS)
-#         if given_arguments in stable_extensions:
-#             print("YES") 
-#         else:
-#             print("NO") 
-# if p[0] == 'DC':
-#     if p[1] == 'CO':
-#         complete_extensions = graph.find_all_complete_extensions()
-#         credulous_arguments = graph.find_credulous_arguments(complete_extensions)
-#         if parsed_args.ARGUMENTS in credulous_arguments:
-#             print("YES")
-#         else:
-#             print("NO")
-#     elif p[1] == 'ST':
-#         stable_extensions = graph.find_all_stable_extensions()
-#         credulous_arguments = graph.find_credulous_arguments(stable_extensions)
-#         if parsed_args.ARGUMENTS in credulous_arguments:
-#             print("YES")
-#         else:
-#             print("NO")
-# if p[0] == 'DS':
-#     if p[1] == 'CO':
-#         complete_extensions = graph.find_all_complete_extensions()
-#         skeptical_arguments = graph.find_skeptical_arguments(complete_extensions)
-#         if parsed_args.ARGUMENTS in skeptical_arguments:
-#             print("YES")
-#         else:
-#             print("NO") 
-#     elif p[1] == 'ST':
-#         stable_extensions = graph.find_all_stable_extensions()
-#         skeptical_arguments = graph.find_skeptical_arguments(stable_extensions)
-#         if parsed_args.ARGUMENTS in skeptical_arguments:
-#             print("YES")
-#         else:
-#             print("NO") 
 
-####### The logic ############
-# Calculate the complete extensions :
+############ The logic ############
+### Calculating the complete extensions : ###
 # Generate all possible argument combination
 # for every argument combination :
 # -conflict free
-# already have this
-
-
 
 # -S completely defends itself
 # Find all attackers of any argument of S:
@@ -110,7 +62,7 @@ else:
 			
 
 
-# Calculate the stable extensions :
+#### Calculating the stable extensions : ###
 
 # for every complete extension :
 # 	For every argument outside of the extension:
@@ -118,7 +70,3 @@ else:
 # 			if not, then it is not a stable extension
 	
 
-
-
-# functions :
-# isAttackedByAtLeastOneOf(argument, setOfArguments)
