@@ -47,7 +47,6 @@ class Graph:
         return self.arguments.difference(argument_combination)
     
     def _does_argument_combination_completely_defend_outsider(self, argument_combination : set) -> bool:
-        # Find the outsiders
         outside_arguments = self._get_compliment_of_argument_combination(argument_combination)
         for outside_argument in outside_arguments:
             outside_argument_attackers = self._find_attackers_of_argument(outside_argument)
@@ -68,20 +67,37 @@ class Graph:
 
     ########### Public ############
 
-
     def find_all_complete_extensions(self) -> list:
         complete_extensions = list()
         all_argument_combinations = self._generate_all_possible_argument_combinations()
         for argument_combination in all_argument_combinations:
-            #Check if it is conflict free
             if not self._is_argument_combination_conflict_free(argument_combination):
                 continue
-            #Check if it completely defends itself
             if not self._does_argument_combination_completely_defend_itself(argument_combination):
                 continue
-            #Check if it does not completely defend an outside argument
             if self._does_argument_combination_completely_defend_outsider(argument_combination):
                 continue
             complete_extensions.append(argument_combination)
 
         return complete_extensions
+
+    def is_argument_combination_a_stable_extension(self, argument_combination : set) -> bool:
+        if not self._is_argument_combination_conflict_free(argument_combination):
+            return False
+        arguments_outside_of_combination = self._get_compliment_of_argument_combination(argument_combination)
+        return self._is_combination_attacked_by_combination(input_combination=arguments_outside_of_combination,
+                                                            attacking_combination=argument_combination)
+
+    def find_all_stable_extensions(self) -> list:
+        stable_extensions = list()
+        all_argument_combinations = self._generate_all_possible_argument_combinations()
+        for argument_combination in all_argument_combinations:
+            if self.is_argument_combination_a_stable_extension(argument_combination):
+                stable_extensions.append(argument_combination)
+        return stable_extensions
+
+    def find_credulous_arguments(self, extensions : list) -> set:
+        return set().union(*extensions)
+
+    def find_skeptical_arguments(self, extensions : list) -> set:
+        return set().intersection(*extensions)

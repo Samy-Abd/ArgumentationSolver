@@ -10,7 +10,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["-p", "VE_CO", "-f", "tests/test_af2.apx", "-a", "D"] //Define the arguments here
+            "args": ["-p", "DC_CO", "-f", "tests/test_af2.apx", "-a", "E"] //Define the arguments here
         }
     ]
 }
