@@ -5,51 +5,86 @@ parsed_args = parse_arguments()
 graph = Graph(file_path=parsed_args.FILE)
 
 p = str(parsed_args.XX_YY).split('_')
-if p[0] == 'VE':
-    if p[1] == 'CO':
-        complete_extensions = graph.find_all_complete_extensions()
+
+isTrue = False
+
+if p[1] == 'CO':
+    complete_extensions = graph.find_all_complete_extensions()
+    if p[0] == 'VE':
         given_arguments = tuple(parsed_args.ARGUMENTS)
-        if given_arguments in complete_extensions:
-            print("YES") 
-        else:
-            print("NO")
-    elif p[1] == 'ST':
-        stable_extensions = graph.find_all_stable_extensions()
-        given_arguments = tuple(parsed_args.ARGUMENTS)
-        if given_arguments in stable_extensions:
-            print("YES") 
-        else:
-            print("NO") 
-if p[0] == 'DC':
-    if p[1] == 'CO':
-        complete_extensions = graph.find_all_complete_extensions()
+        isTrue = given_arguments in complete_extensions
+    elif p[0] == 'DC':
+        given_arguments = parsed_args.ARGUMENTS
         credulous_arguments = graph.find_credulous_arguments(complete_extensions)
-        if parsed_args.ARGUMENTS in credulous_arguments:
-            print("YES")
-        else:
-            print("NO")
-    elif p[1] == 'ST':
-        stable_extensions = graph.find_all_stable_extensions()
-        credulous_arguments = graph.find_credulous_arguments(stable_extensions)
-        if parsed_args.ARGUMENTS in credulous_arguments:
-            print("YES")
-        else:
-            print("NO")
-if p[0] == 'DS':
-    if p[1] == 'CO':
-        complete_extensions = graph.find_all_complete_extensions()
+        isTrue = parsed_args.ARGUMENTS in credulous_arguments
+    elif p[0] == 'DS':
+        given_arguments = parsed_args.ARGUMENTS
         skeptical_arguments = graph.find_skeptical_arguments(complete_extensions)
-        if parsed_args.ARGUMENTS in skeptical_arguments:
-            print("YES")
-        else:
-            print("NO") 
-    elif p[1] == 'ST':
-        stable_extensions = graph.find_all_stable_extensions()
+        isTrue = parsed_args.ARGUMENTS in skeptical_arguments
+
+if p[1] == 'ST':
+    stable_extensions = graph.find_all_stable_extensions()
+    if p[0] == 'VE':
+        given_arguments = tuple(parsed_args.ARGUMENTS)
+        isTrue = given_arguments in stable_extensions
+    elif p[0] == 'DC':
+        given_arguments = parsed_args.ARGUMENTS
+        credulous_arguments = graph.find_credulous_arguments(stable_extensions)
+        isTrue = parsed_args.ARGUMENTS in credulous_arguments
+    elif p[0] == 'DS':
+        given_arguments = parsed_args.ARGUMENTS
         skeptical_arguments = graph.find_skeptical_arguments(stable_extensions)
-        if parsed_args.ARGUMENTS in skeptical_arguments:
-            print("YES")
-        else:
-            print("NO") 
+        isTrue = parsed_args.ARGUMENTS in skeptical_arguments
+
+if isTrue:
+    print("YES")
+else:
+    print("NO")
+# if p[0] == 'VE':
+#     if p[1] == 'CO':
+#         complete_extensions = graph.find_all_complete_extensions()
+#         given_arguments = tuple(parsed_args.ARGUMENTS)
+#         if given_arguments in complete_extensions:
+#             print("YES") 
+#         else:
+#             print("NO")
+#     elif p[1] == 'ST':
+#         stable_extensions = graph.find_all_stable_extensions()
+#         given_arguments = tuple(parsed_args.ARGUMENTS)
+#         if given_arguments in stable_extensions:
+#             print("YES") 
+#         else:
+#             print("NO") 
+# if p[0] == 'DC':
+#     if p[1] == 'CO':
+#         complete_extensions = graph.find_all_complete_extensions()
+#         credulous_arguments = graph.find_credulous_arguments(complete_extensions)
+#         if parsed_args.ARGUMENTS in credulous_arguments:
+#             print("YES")
+#         else:
+#             print("NO")
+#     elif p[1] == 'ST':
+#         stable_extensions = graph.find_all_stable_extensions()
+#         credulous_arguments = graph.find_credulous_arguments(stable_extensions)
+#         if parsed_args.ARGUMENTS in credulous_arguments:
+#             print("YES")
+#         else:
+#             print("NO")
+# if p[0] == 'DS':
+#     if p[1] == 'CO':
+#         complete_extensions = graph.find_all_complete_extensions()
+#         skeptical_arguments = graph.find_skeptical_arguments(complete_extensions)
+#         if parsed_args.ARGUMENTS in skeptical_arguments:
+#             print("YES")
+#         else:
+#             print("NO") 
+#     elif p[1] == 'ST':
+#         stable_extensions = graph.find_all_stable_extensions()
+#         skeptical_arguments = graph.find_skeptical_arguments(stable_extensions)
+#         if parsed_args.ARGUMENTS in skeptical_arguments:
+#             print("YES")
+#         else:
+#             print("NO") 
 
 ####### The logic ############
 # Calculate the complete extensions :
