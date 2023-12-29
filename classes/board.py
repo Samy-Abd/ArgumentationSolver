@@ -17,11 +17,11 @@ class Graph:
                     return False  # Conflict found
         return True
 
-    def _find_attackers_of_argument(self, argument: str) -> tuple:
-        attackers = tuple()
+    def _find_attackers_of_argument(self, argument: str) -> set:
+        attackers = set()
         for attack in self.attacks:
             if attack[1] == argument:
-                attackers = attackers + (attack[0], ) # Attacker found
+                attackers.update(attack[0]) # Attacker found
         return attackers
     
     def _find_attackers_of_argument_combination(self, argument_combination: set):
@@ -43,11 +43,25 @@ class Graph:
         (one attacking argument from the attacking combination is enough)"""
         return all([self._is_argument_attacked_by_combination(input_argument, attacking_combination) for input_argument in input_combination])
     
+    def _get_compliment_of_argument_combination(self, argument_combination : set) -> set:
+        return self.arguments.difference(argument_combination)
+    
+    def _does_argument_combination_completely_defend_outsider(self, argument_combination : set) -> bool:
+        # Find the outsiders
+        outside_arguments = self._get_compliment_of_argument_combination(argument_combination)
+        for outside_argument in outside_arguments:
+            outside_argument_attackers = self._find_attackers_of_argument(outside_argument)
+            if self._is_combination_attacked_by_combination(input_combination=outside_argument_attackers,
+                                                            attacking_combination=argument_combination):
+                return True
+        return False
+    
     def _does_argument_combination_completely_defend_itself(self, argument_combination : set) -> bool:
-        #Find all attackers of any argument of S:
+        #argument_combination is the extension we consider
         attackers_of_combination = self._find_attackers_of_argument_combination(argument_combination)
 	    #Are they all attacked by at least one member of S ?
-        if not self._is_combination_attacked_by_combination(attackers_of_combination, argument_combination):
+        if not self._is_combination_attacked_by_combination(input_combination=attackers_of_combination,
+                                                            attacking_combination=argument_combination):
             return False
 		#if yes, then pass, otherwise it is not complete
         return True
@@ -66,7 +80,8 @@ class Graph:
             if not self._does_argument_combination_completely_defend_itself(argument_combination):
                 continue
             #Check if it does not completely defend an outside argument
-
+            if self._does_argument_combination_completely_defend_outsider(argument_combination):
+                continue
             complete_extensions.append(argument_combination)
 
         return complete_extensions
