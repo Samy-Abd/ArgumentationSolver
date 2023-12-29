@@ -1,0 +1,16 @@
+{
+    // Use the debugger window in vscode along with this file to execute the program in debug mode
+    // while providing it the arguments below.
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["-p", "VE_CO", "-f", "tests/test_af3.apx", "-a", "D"] //Define the arguments here
+        }
+    ]
+}
