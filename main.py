@@ -1,43 +1,47 @@
-from classes.graph import Graph
+# Authors:
+# Aghiles Samy AOUABED
+# Abdelghani Yanis BOUCHELAGHEM
+
+from classes.ArgumentationFramework import ArgumentationFramework
 from utils.parser import parse_arguments
 
 parsed_args = parse_arguments()
-graph = Graph(file_path=parsed_args.FILE)
+argumentationFramework = ArgumentationFramework(file_path=parsed_args.FILE)
 
 p = str(parsed_args.XX_YY).split('_')
 
 isTrue = False
 
 if p[1] == 'CO':
-    complete_extensions = graph.find_all_complete_extensions()
+    complete_extensions = argumentationFramework.find_all_complete_extensions()
     print("Complete extensions found : ", complete_extensions)
     if p[0] == 'VE':
         given_arguments = tuple(parsed_args.ARGUMENTS)
         isTrue = given_arguments in complete_extensions
     elif p[0] == 'DC':
         given_arguments = parsed_args.ARGUMENTS
-        credulous_arguments = graph.find_credulous_arguments(complete_extensions)
+        credulous_arguments = argumentationFramework.find_credulous_arguments(complete_extensions)
         print("Credulous arguments found : ", credulous_arguments)
         isTrue = parsed_args.ARGUMENTS in credulous_arguments
     elif p[0] == 'DS':
         given_arguments = parsed_args.ARGUMENTS
-        skeptical_arguments = graph.find_skeptical_arguments(complete_extensions)
+        skeptical_arguments = argumentationFramework.find_skeptical_arguments(complete_extensions)
         print("Skeptical arguments found : ", skeptical_arguments)
         isTrue = parsed_args.ARGUMENTS in skeptical_arguments
 elif p[1] == 'ST':
-    stable_extensions = graph.find_all_stable_extensions()
+    stable_extensions = argumentationFramework.find_all_stable_extensions()
     print("Stable extensions found : ", stable_extensions)
     if p[0] == 'VE':
         given_arguments = tuple(parsed_args.ARGUMENTS)
         isTrue = given_arguments in stable_extensions
     elif p[0] == 'DC':
         given_arguments = parsed_args.ARGUMENTS
-        credulous_arguments = graph.find_credulous_arguments(stable_extensions)
+        credulous_arguments = argumentationFramework.find_credulous_arguments(stable_extensions)
         print("Credulous arguments found : ", credulous_arguments)
         isTrue = parsed_args.ARGUMENTS in credulous_arguments
     elif p[0] == 'DS':
         given_arguments = parsed_args.ARGUMENTS
-        skeptical_arguments = graph.find_skeptical_arguments(stable_extensions)
+        skeptical_arguments = argumentationFramework.find_skeptical_arguments(stable_extensions)
         print("Skeptical arguments found : ", skeptical_arguments)
         isTrue = parsed_args.ARGUMENTS in skeptical_arguments
 

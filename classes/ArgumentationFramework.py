@@ -1,7 +1,7 @@
 from utils.fileReader import read_arguments_and_attacks
 from utils.powerset import powerset
 
-class Graph:
+class ArgumentationFramework:
     def __init__(self, file_path: str) -> None:
         self.arguments, self.attacks = read_arguments_and_attacks(file_path)
     
@@ -65,6 +65,12 @@ class Graph:
 		#if yes, then pass, otherwise it is not complete
         return True
 
+    def _is_argument_combination_a_stable_extension(self, argument_combination : set) -> bool:
+        if not self._is_argument_combination_conflict_free(argument_combination):
+            return False
+        arguments_outside_of_combination = self._get_compliment_of_argument_combination(argument_combination)
+        return self._is_combination_attacked_by_combination(input_combination=arguments_outside_of_combination,
+                                                            attacking_combination=argument_combination)
     ########### Public ############
 
     def find_all_complete_extensions(self) -> list:
@@ -81,18 +87,11 @@ class Graph:
 
         return complete_extensions
 
-    def is_argument_combination_a_stable_extension(self, argument_combination : set) -> bool:
-        if not self._is_argument_combination_conflict_free(argument_combination):
-            return False
-        arguments_outside_of_combination = self._get_compliment_of_argument_combination(argument_combination)
-        return self._is_combination_attacked_by_combination(input_combination=arguments_outside_of_combination,
-                                                            attacking_combination=argument_combination)
-
     def find_all_stable_extensions(self) -> list:
         stable_extensions = list()
         all_argument_combinations = self._generate_all_possible_argument_combinations()
         for argument_combination in all_argument_combinations:
-            if self.is_argument_combination_a_stable_extension(argument_combination):
+            if self._is_argument_combination_a_stable_extension(argument_combination):
                 stable_extensions.append(argument_combination)
         return stable_extensions
 
