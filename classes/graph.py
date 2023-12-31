@@ -100,4 +100,9 @@ class Graph:
         return set().union(*extensions)
 
     def find_skeptical_arguments(self, extensions : list) -> set:
-        return set().intersection(*extensions)
+
+        if len(extensions) != 0:
+            sets = [set(extension) for extension in extensions]
+            return sets[0].intersection(*sets)
+        else:
+            return set()

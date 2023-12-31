@@ -18,9 +18,12 @@ def parse_arguments():
     # Validate -a argument based on -p value
     if args.ARGUMENTS:
         if args.XX_YY and args.XX_YY.startswith('VE'):
-            args.ARGUMENTS = args.ARGUMENTS.split(',')
+            if args.ARGUMENTS == "0":
+                args.ARGUMENTS = list()
+            else:
+                args.ARGUMENTS = args.ARGUMENTS.split(',')
         elif args.XX_YY and args.XX_YY.startswith(('DC', 'DS')):
-            if ',' in args.ARGUMENTS:
-                parser.error('When -p starts with DC or DS, -a must have only one argument.')
+            if ',' in args.ARGUMENTS or args.ARGUMENTS == "0":
+                parser.error('When -p starts with DC or DS, -a must have only one argument different than an empty set.')
 
     return args
